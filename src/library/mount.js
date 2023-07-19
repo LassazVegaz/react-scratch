@@ -42,7 +42,7 @@ const decompileStandardJsx = (jsx, root) => {
 };
 
 // attach given JSX element to given DOM element
-export default mount = (jsxElement, root) => {
+const mount = (jsxElement, root) => {
 	const type = jsxElement.type;
 
 	// depending on JSX component type,
@@ -53,3 +53,5 @@ export default mount = (jsxElement, root) => {
 		decompileStandardJsx(jsxElement, root);
 	}
 };
+
+export default mount;
