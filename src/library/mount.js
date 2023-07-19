@@ -18,7 +18,11 @@ const decompileStandardJsx = (jsx, root) => {
 
 	// add attributes to node
 	for (const attr in eleAttrs) {
-		if (Object.hasOwnProperty.call(eleAttrs, attr) && attr !== "children") {
+		if (
+			Object.hasOwnProperty.call(eleAttrs, attr) &&
+			attr !== "children" &&
+			attr !== "__source"
+		) {
 			const attrVal = eleAttrs[attr];
 			const attrName = transformAttrName(attr);
 			attrVal && node.setAttribute(attrName, attrVal.toString());
