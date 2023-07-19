@@ -1,3 +1,5 @@
+import { transformAttrName } from "./utils";
+
 // decompile custom JSX into DOM
 const decompileCustomJsx = (jsx, root) => {
 	const jsxFunc = jsx.type;
@@ -18,7 +20,8 @@ const decompileStandardJsx = (jsx, root) => {
 	for (const attr in eleAttrs) {
 		if (Object.hasOwnProperty.call(eleAttrs, attr) && attr !== "children") {
 			const attrVal = eleAttrs[attr];
-			attrVal && node.setAttribute(attr, attrVal.toString());
+			const attrName = transformAttrName(attr);
+			attrVal && node.setAttribute(attrName, attrVal.toString());
 		}
 	}
 
