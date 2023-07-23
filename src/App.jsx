@@ -7,17 +7,13 @@ const Heading = () => {
 export const App = () => {
 	const [num, setNum] = useState(0);
 
-	const h = () => {
-		alert("Hello World!");
-	};
-
 	return (
 		<div>
 			<Heading />
 			<span>Coming from react built from scratch</span>
 			<br />
 			<br />
-			<button onClick={h}>Increase {num}</button>
+			<button onClick={() => setNum(num + 1)}>Increase {num}</button>
 		</div>
 	);
 };

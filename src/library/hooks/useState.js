@@ -1,3 +1,5 @@
+import { reRender } from "../scratch";
+
 let state = undefined;
 
 const useState = (initialState) => {
@@ -5,6 +7,7 @@ const useState = (initialState) => {
 
 	const setState = (newState) => {
 		state = newState;
+		reRender();
 	};
 
 	return [state, setState];
