@@ -21,11 +21,15 @@ const decompileStandardJsx = (jsx, root) => {
 		if (
 			Object.hasOwnProperty.call(eleAttrs, attr) &&
 			attr !== "children" &&
-			attr !== "__source"
+			attr !== "__source" &&
+			attr !== "__self"
 		) {
 			const attrVal = eleAttrs[attr];
 			const attrName = transformAttrName(attr);
-			attrVal && node.setAttribute(attrName, attrVal.toString());
+			if (typeof attrVal === "function") {
+				const eventName = attrName.slice(2);
+				node.addEventListener(eventName, attrVal);
+			} else node.setAttribute(attrName, attrVal);
 		}
 	}
 
@@ -34,11 +38,11 @@ const decompileStandardJsx = (jsx, root) => {
 	if (!Array.isArray(children)) {
 		children = [children];
 	}
-	children = children.filter(Boolean);
+	children = children.filter((c) => c !== null || c !== undefined);
 
 	children.forEach((child) => {
-		if (typeof child === "string") {
-			node.appendChild(document.createTextNode(child));
+		if (typeof child === "string" || typeof child === "number") {
+			node.appendChild(document.createTextNode(child.toString()));
 		} else {
 			mount(child, node);
 		}
