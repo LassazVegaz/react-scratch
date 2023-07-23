@@ -1,3 +1,5 @@
+import { transformAttrName } from "./utils";
+
 // decompile custom JSX into DOM
 const decompileCustomJsx = (jsx, root) => {
 	const jsxFunc = jsx.type;
@@ -16,9 +18,18 @@ const decompileStandardJsx = (jsx, root) => {
 
 	// add attributes to node
 	for (const attr in eleAttrs) {
-		if (Object.hasOwnProperty.call(eleAttrs, attr) && attr !== "children") {
+		if (
+			Object.hasOwnProperty.call(eleAttrs, attr) &&
+			attr !== "children" &&
+			attr !== "__source" &&
+			attr !== "__self"
+		) {
 			const attrVal = eleAttrs[attr];
-			attrVal && node.setAttribute(attr, attrVal.toString());
+			const attrName = transformAttrName(attr);
+			if (typeof attrVal === "function") {
+				const eventName = attrName.slice(2);
+				node.addEventListener(eventName, attrVal);
+			} else node.setAttribute(attrName, attrVal);
 		}
 	}
 
@@ -27,11 +38,11 @@ const decompileStandardJsx = (jsx, root) => {
 	if (!Array.isArray(children)) {
 		children = [children];
 	}
-	children = children.filter(Boolean);
+	children = children.filter((c) => c !== null || c !== undefined);
 
 	children.forEach((child) => {
-		if (typeof child === "string") {
-			node.appendChild(document.createTextNode(child));
+		if (typeof child === "string" || typeof child === "number") {
+			node.appendChild(document.createTextNode(child.toString()));
 		} else {
 			mount(child, node);
 		}
@@ -42,7 +53,7 @@ const decompileStandardJsx = (jsx, root) => {
 };
 
 // attach given JSX element to given DOM element
-export default mount = (jsxElement, root) => {
+const mount = (jsxElement, root) => {
 	const type = jsxElement.type;
 
 	// depending on JSX component type,
@@ -53,3 +64,5 @@ export default mount = (jsxElement, root) => {
 		decompileStandardJsx(jsxElement, root);
 	}
 };
+
+export default mount;
