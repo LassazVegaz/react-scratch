@@ -5,15 +5,21 @@ const Heading = () => {
 };
 
 export const App = () => {
-	const [num, setNum] = useState(0);
+	const [num1, setNum1] = useState(0);
+	const [num2, setNum2] = useState(0);
 
 	return (
-		<div>
+		<div className="container">
 			<Heading />
-			<span>Coming from react built from scratch</span>
-			<br />
-			<br />
-			<button onClick={() => setNum(num + 1)}>Increase {num}</button>
+			<div>Coming from react built from scratch</div>
+			<div className="buttons-container">
+				<button onClick={() => setNum1(num1 + 1)}>
+					Increase {num1}
+				</button>
+				<button onClick={() => setNum2(num2 + 1)}>
+					Increase {num2}
+				</button>
+			</div>
 		</div>
 	);
 };
