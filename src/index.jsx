@@ -1,9 +1,9 @@
 import { App } from "./App";
 import "./index.css";
-import { ReactScratch } from "./library/scratch";
+import React from "./library/react";
 
 // creating root
-const root = ReactScratch.createRoot("root");
+const root = React.createRoot("root");
 
 // render
 root.render(<App />);

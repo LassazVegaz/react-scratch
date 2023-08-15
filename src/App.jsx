@@ -1,12 +1,12 @@
-import useState from "./library/hooks/useState";
+import React from "./library/react";
 
 const Heading = () => {
 	return <h1 className="heading">Hello World!</h1>;
 };
 
 export const App = () => {
-	const [num1, setNum1] = useState(0);
-	const [num2, setNum2] = useState(0);
+	const [num1, setNum1] = React.useState(0);
+	const [num2, setNum2] = React.useState(0);
 
 	return (
 		<div className="container">
