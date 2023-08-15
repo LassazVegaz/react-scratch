@@ -1,4 +1,4 @@
-const React = {
+const _React = {
 	createElement: (type, config, ...children) => {
 		const props = {};
 
