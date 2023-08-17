@@ -8,6 +8,18 @@ export const App = () => {
 	const [num1, setNum1] = React.useState(0);
 	const [num2, setNum2] = React.useState(0);
 
+	React.useEffect(() => {
+		console.log("I am mounted");
+	}, []);
+
+	React.useEffect(() => {
+		console.log(`num1 changed: ${num1}`);
+	}, [num1]);
+
+	React.useEffect(() => {
+		console.log(`num2 changed: ${num2}`);
+	}, [num2]);
+
 	return (
 		<div className="container">
 			<Heading />

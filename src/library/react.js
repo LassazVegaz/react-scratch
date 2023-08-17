@@ -137,15 +137,19 @@ const React = (() => {
 		return [hooksData[index], setState];
 	};
 
-	const useEffect = (fn, deps) => {
+	const useEffect = (fn, deps = []) => {
 		const index = hooksDataIndexes++;
 
 		let hasChanges = true;
 		const existingDeps = hooksData[index];
 
 		if (existingDeps !== undefined) {
-			hasChanges = deps.every((d, i) => d === existingDeps[i]);
+			hasChanges =
+				existingDeps.length !== 0 &&
+				deps.some((d, i) => d !== existingDeps[i]);
 		}
+
+		hooksData[index] = deps;
 
 		if (hasChanges) fn();
 	};
