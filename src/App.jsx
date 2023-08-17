@@ -1,12 +1,28 @@
 import React from "./library/react";
 
 const Heading = () => {
+	React.useEffect(() => {
+		console.log("Heading mounted");
+	}, []);
+
 	return <h1 className="heading">Hello World!</h1>;
 };
 
 export const App = () => {
 	const [num1, setNum1] = React.useState(0);
 	const [num2, setNum2] = React.useState(0);
+
+	React.useEffect(() => {
+		console.log("App mounted");
+	}, []);
+
+	React.useEffect(() => {
+		console.log(`num1 changed: ${num1}`);
+	}, [num1]);
+
+	React.useEffect(() => {
+		console.log(`num2 changed: ${num2}`);
+	}, [num2]);
 
 	return (
 		<div className="container">
