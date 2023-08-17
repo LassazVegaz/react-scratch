@@ -137,10 +137,24 @@ const React = (() => {
 		return [hooksData[index], setState];
 	};
 
+	const useEffect = (fn, deps) => {
+		const index = hooksDataIndexes++;
+
+		let hasChanges = true;
+		const existingDeps = hooksData[index];
+
+		if (existingDeps !== undefined) {
+			hasChanges = deps.every((d, i) => d === existingDeps[i]);
+		}
+
+		if (hasChanges) fn();
+	};
+
 	return {
 		createElement,
 		createRoot,
 		useState,
+		useEffect,
 	};
 })();
 
