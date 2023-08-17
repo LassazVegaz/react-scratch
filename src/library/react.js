@@ -4,10 +4,10 @@ const React = (() => {
 	let reRender = null;
 
 	// this will be used to store state of each component
-	let states = [];
+	let hooksData = [];
 
 	// this will incremented for each useState call. But this also should be set -1 when re-rendering
-	let indexes = -1;
+	let hooksDataIndexes = 0;
 
 	// decompile custom JSX into DOM
 	const decompileCustomJsx = (jsx, root) => {
@@ -109,6 +109,7 @@ const React = (() => {
 		return {
 			render: (jsxEle) => {
 				reRender = () => {
+					hooksDataIndexes = 0; // reseting the indexes before re-rendering
 					root.innerHTML = "";
 					mount(jsxEle, root);
 				};
@@ -119,22 +120,21 @@ const React = (() => {
 
 	const useState = (initialState) => {
 		// get this useState call's index
-		const index = ++indexes;
+		const index = hooksDataIndexes++;
 
 		// check if the index already has memory
-		if (states[index] === undefined) states[index] = initialState;
+		if (hooksData[index] === undefined) hooksData[index] = initialState;
 
 		// setState will be called later. we need capture current index of the state memory array
 		// so we can alter that memory when setState is called
 		// when re-rendering, stored state will be returned
 		const setState = (newState) => {
 			// alter the stored state memory with the captured index
-			states[index] = newState;
-			indexes = -1; // reseting the indexes before re-rendering
+			hooksData[index] = newState;
 			reRender();
 		};
 
-		return [states[index], setState];
+		return [hooksData[index], setState];
 	};
 
 	return {
