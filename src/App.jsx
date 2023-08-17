@@ -1,6 +1,10 @@
 import React from "./library/react";
 
 const Heading = () => {
+	React.useEffect(() => {
+		console.log("Heading mounted");
+	}, []);
+
 	return <h1 className="heading">Hello World!</h1>;
 };
 
@@ -9,7 +13,7 @@ export const App = () => {
 	const [num2, setNum2] = React.useState(0);
 
 	React.useEffect(() => {
-		console.log("I am mounted");
+		console.log("App mounted");
 	}, []);
 
 	React.useEffect(() => {

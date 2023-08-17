@@ -138,19 +138,28 @@ const React = (() => {
 	};
 
 	const useEffect = (fn, deps = []) => {
+		// get the index for this hook call
 		const index = hooksDataIndexes++;
 
+		// assume there are changes in the begining. This can be first run
 		let hasChanges = true;
+
+		// get exisitng hook data
 		const existingDeps = hooksData[index];
 
+		// if there are no existing hook data, this is the first run
 		if (existingDeps !== undefined) {
+			// if length of existing dependancies is 0, there are no changes
+			// otherwise check if any of the exisitng deps are changed
 			hasChanges =
 				existingDeps.length !== 0 &&
-				deps.some((d, i) => d !== existingDeps[i]);
+				existingDeps.some((d, i) => d !== deps[i]);
 		}
 
+		// store the new deps
 		hooksData[index] = deps;
 
+		// call the useState function if there are changes
 		if (hasChanges) fn();
 	};
 
